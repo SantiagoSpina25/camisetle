@@ -59,6 +59,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: showGamePage,
             child: Text("Daily challange"),
           ),
+          ElevatedButton(
+            onPressed: showGamePage,
+            child: Text("Previous challanges"),
+          ),
         ],
       ),
     );

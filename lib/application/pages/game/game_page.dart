@@ -28,6 +28,14 @@ class _GamePageState extends State<GamePage> {
 
   List<String> filteredTeams = [];
 
+  int getChallengeNumber() {
+    final baseDate = DateTime(2025, 6, 26);
+    final today = DateTime.now();
+
+    final difference = today.difference(baseDate).inDays;
+    return difference + 1;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,8 +64,13 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
+    int challangeNumber = getChallengeNumber();
+
     return Scaffold(
-      appBar: AppBar(title: Text("Daily challange #1"), centerTitle: true),
+      appBar: AppBar(
+        title: Text("Daily challange #$challangeNumber"),
+        centerTitle: true,
+      ),
       body: SizedBox(
         width: double.infinity,
         child: Column(
