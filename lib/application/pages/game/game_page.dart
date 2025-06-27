@@ -1,7 +1,10 @@
+import 'package:camisetle/data/models/jersey_challange.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key});
+  const GamePage({super.key, required this.jerseyChallenge});
+
+  final JerseyChallenge jerseyChallenge;
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -78,7 +81,7 @@ class _GamePageState extends State<GamePage> {
             ElevatedButton(
               onPressed: () {
                 final guess = _guessController.text.trim();
-                print('Usuaario adivinó: $guess');
+                print('Usuario adivinó: $guess');
               },
               child: Text("Guess"),
             ),
@@ -89,7 +92,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   Widget _jerseyRevealGrid() {
-    return Image.asset('assets/camiseta1.jpg', fit: BoxFit.cover);
+    return Image.asset(widget.jerseyChallenge.imagePath, fit: BoxFit.cover);
   }
 
   Widget _teamsTextField() {
