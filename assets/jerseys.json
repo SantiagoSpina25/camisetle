@@ -10,5 +10,35 @@
     "teamName": "FC Barcelona",
     "year": 2008,
     "date": "2025-06-26"
+  },
+  {
+    "imagePath": "assets/manchester-united_primary_98-99.jpg",
+    "teamName": "Manchester United",
+    "year": 1998,
+    "date": "2025-06-28"
+  },
+  {
+    "imagePath": "assets/arsenal_primary_05-06.jpg",
+    "teamName": "Arsenal",
+    "year": 2005,
+    "date": "2025-06-29"
+  },
+  {
+    "imagePath": "assets/chelsea_primary_11-12.jpg",
+    "teamName": "Chelsea",
+    "year": 2011,
+    "date": "2025-06-29"
+  },
+  {
+    "imagePath": "assets/inter-milan_primary_09-10.jpg",
+    "teamName": "Inter Milan",
+    "year": 2009,
+    "date": "2025-06-30"
+  },
+  {
+    "imagePath": "assets/milan_primary_06-07.jpg",
+    "teamName": "Milan",
+    "year": 2006,
+    "date": "2025-06-31"
   }
 ]

@@ -28,6 +28,7 @@ class _GamePageState extends State<GamePage> {
 
   List<String> filteredTeams = [];
 
+  ///Obtiene el numero del challenge actual (El #1 es el 26/6/2025)
   int getChallengeNumber() {
     final baseDate = DateTime(2025, 6, 26);
     final today = DateTime.now();
@@ -91,13 +92,7 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
 
-            ElevatedButton(
-              onPressed: () {
-                final guess = _guessController.text.trim();
-                print('Usuario adivinó: $guess');
-              },
-              child: Text("Guess"),
-            ),
+            ElevatedButton(onPressed: checkAnswer, child: Text("Guess")),
           ],
         ),
       ),
@@ -119,5 +114,50 @@ class _GamePageState extends State<GamePage> {
         ),
       ),
     );
+  }
+
+  void checkAnswer() {
+    final guess = _guessController.text.trim();
+    String jerseyTeam = widget.jerseyChallenge.teamName;
+    int jerseyYear = widget.jerseyChallenge.year;
+    String jerseyRealYear = "$jerseyYear-${jerseyYear + 1}";
+
+    bool isCorrect = guess == jerseyTeam;
+
+    if (isCorrect) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Correct! ✅", textAlign: TextAlign.center),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Congratulations, you guessed the right team",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              Image.asset(widget.jerseyChallenge.imagePath, height: 150),
+              SizedBox(height: 16),
+              Text("Team: $jerseyTeam\nYear: $jerseyRealYear"),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Ok"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Respuesta incorrecta. ¡Intenta de nuevo!"),
+          backgroundColor: Colors.redAccent,
+          duration: Duration(milliseconds: 1500),
+        ),
+      );
+    }
   }
 }
