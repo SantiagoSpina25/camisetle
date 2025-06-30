@@ -2,9 +2,14 @@ import 'package:camisetle/data/models/jersey_challange.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key, required this.jerseyChallenge});
+  const GamePage({
+    super.key,
+    required this.jerseyChallenge,
+    required this.challengeNumber,
+  });
 
   final JerseyChallenge jerseyChallenge;
+  final int challengeNumber;
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -27,15 +32,6 @@ class _GamePageState extends State<GamePage> {
   ];
 
   List<String> filteredTeams = [];
-
-  ///Obtiene el numero del challenge actual (El #1 es el 26/6/2025)
-  int getChallengeNumber() {
-    final baseDate = DateTime(2025, 6, 26);
-    final today = DateTime.now();
-
-    final difference = today.difference(baseDate).inDays;
-    return difference + 1;
-  }
 
   @override
   void initState() {
@@ -65,7 +61,7 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    int challangeNumber = getChallengeNumber();
+    int challangeNumber = widget.challengeNumber;
 
     return Scaffold(
       appBar: AppBar(
@@ -159,5 +155,6 @@ class _GamePageState extends State<GamePage> {
         ),
       );
     }
+    _guessController.clear();
   }
 }

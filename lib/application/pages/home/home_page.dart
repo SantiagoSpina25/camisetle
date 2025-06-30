@@ -1,4 +1,5 @@
 import 'package:camisetle/application/pages/game/game_page.dart';
+import 'package:camisetle/application/pages/previous_challenges/previous_challenges.dart';
 import 'package:camisetle/data/jersey_loader.dart';
 import 'package:camisetle/data/models/jersey_challange.dart';
 import 'package:flutter/material.dart';
@@ -34,10 +35,20 @@ class _HomePageState extends State<HomePage> {
       if (!mounted) return;
 
       if (todayChallenge != null) {
+        ///Obtiene el numero del challenge actual (El #1 es el 26/6/2025)
+        final baseDate = DateTime(2025, 6, 26);
+        final today = DateTime.now();
+
+        final difference = today.difference(baseDate).inDays;
+        int challengeNumber = difference + 1;
+
         // ignore: use_build_context_synchronously
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => GamePage(jerseyChallenge: todayChallenge),
+            builder: (context) => GamePage(
+              jerseyChallenge: todayChallenge,
+              challengeNumber: challengeNumber,
+            ),
           ),
         );
       } else {
@@ -60,8 +71,14 @@ class _HomePageState extends State<HomePage> {
             child: Text("Daily challange"),
           ),
           ElevatedButton(
-            onPressed: showGamePage,
-            child: Text("Previous challanges"),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AllChallengesPage(),
+                ),
+              );
+            },
+            child: Text("All challenges"),
           ),
         ],
       ),
