@@ -91,7 +91,7 @@ class _GamePageState extends State<GamePage> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),
-              Image.asset(widget.jerseyChallenge.imageUrl, height: 150),
+              Image.network(widget.jerseyChallenge.imageUrl, height: 150),
               SizedBox(height: 16),
               Text("Team: $jerseyTeam\nYear: $jerseyRealYear"),
             ],
