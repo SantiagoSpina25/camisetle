@@ -1,29 +1,22 @@
 class JerseyChallenge {
-  final String imagePath;
+  final String imageUrl;
   final String teamName;
   final int year;
-  final DateTime date;
+  final String date;
 
   JerseyChallenge({
-    required this.imagePath,
+    required this.imageUrl,
     required this.teamName,
     required this.year,
     required this.date,
   });
 
-  factory JerseyChallenge.fromJson(Map<String, dynamic> json) {
+  factory JerseyChallenge.fromFirestore(Map<String, dynamic> json) {
     return JerseyChallenge(
-      imagePath: json['imagePath'],
       teamName: json['teamName'],
       year: json['year'],
-      date: DateTime.parse(json['date']),
+      date: json['teamName'],
+      imageUrl: json['imageUrl'],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-    'imagePath': imagePath,
-    'teamName': teamName,
-    'year': year,
-    'date': date.toIso8601String(),
-  };
 }

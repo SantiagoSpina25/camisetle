@@ -1,44 +1,44 @@
 [
   {
-    "imagePath": "assets/real-madrid_primary_24-25.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/real-madrid_primary_24-25.jpg",
     "teamName": "Real Madrid",
     "year": 2024,
-    "date": "2025-06-27"
+    "date": "2025-07-10"
   },
   {
-    "imagePath": "assets/barcelona_primary_08-09.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/barcelona_primary_08-09.jpg",
     "teamName": "FC Barcelona",
     "year": 2008,
-    "date": "2025-06-26"
+    "date": "2025-07-11"
   },
   {
-    "imagePath": "assets/manchester-united_primary_98-99.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/manchester-united_primary_98-99.jpg",
     "teamName": "Manchester United",
     "year": 1998,
-    "date": "2025-06-28"
+    "date": "2025-07-12"
   },
   {
-    "imagePath": "assets/arsenal_primary_05-06.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/arsenal_primary_05-06.jpg",
     "teamName": "Arsenal",
     "year": 2005,
-    "date": "2025-06-29"
+    "date": "2025-07-13"
   },
   {
-    "imagePath": "assets/chelsea_primary_11-12.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/chelsea_primary_11-12.jpg",
     "teamName": "Chelsea",
     "year": 2011,
-    "date": "2025-06-29"
+    "date": "2025-07-14"
   },
   {
-    "imagePath": "assets/inter-milan_primary_09-10.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/inter-milan_primary_09-10.jpg",
     "teamName": "Inter Milan",
     "year": 2009,
-    "date": "2025-06-30"
+    "date": "2025-07-15"
   },
   {
-    "imagePath": "assets/milan_primary_06-07.jpg",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/SantiagoSpina25/camisetle-assets@main/jerseys/milan_primary_06-07.jpg",
     "teamName": "AC Milan",
     "year": 2006,
-    "date": "2025-06-31"
+    "date": "2025-07-16"
   }
 ]

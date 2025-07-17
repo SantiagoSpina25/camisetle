@@ -1,62 +1,46 @@
 import 'package:camisetle/application/pages/game/game_page.dart';
 import 'package:camisetle/application/pages/previous_challenges/previous_challenges.dart';
-import 'package:camisetle/data/jersey_loader.dart';
 import 'package:camisetle/data/models/jersey_challange.dart';
+import 'package:camisetle/data/providers/challenge_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    void showGamePage() async {
+      final todayChallenge = ref.watch(todayChallengeProvider);
 
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    bool isSameDay(DateTime a, DateTime b) {
-      return a.year == b.year && a.month == b.month && a.day == b.day;
-    }
-
-    Future<JerseyChallenge?> getTodayChallenge() async {
-      final challenges = await loadJerseyChallenges();
+      final baseDate = DateTime(2025, 7, 10);
       final today = DateTime.now();
 
-      try {
-        return challenges.firstWhere((c) => isSameDay(c.date, today));
-      } catch (_) {
-        return null;
-      }
-    }
+      final difference = today.difference(baseDate).inDays;
+      int challengeNumber = difference + 1;
 
-    void showGamePage() async {
-      final todayChallenge = await getTodayChallenge();
+      return todayChallenge.when(
+        data: (challenge) {
+          //Si no hay challenge para hoy, muestra un mensaje
+          if (challenge == null) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text("No hay desafío para hoy.")));
+          }
 
-      if (!mounted) return;
-
-      if (todayChallenge != null) {
-        ///Obtiene el numero del challenge actual (El #1 es el 26/6/2025)
-        final baseDate = DateTime(2025, 6, 26);
-        final today = DateTime.now();
-
-        final difference = today.difference(baseDate).inDays;
-        int challengeNumber = difference + 1;
-
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => GamePage(
-              jerseyChallenge: todayChallenge,
-              challengeNumber: challengeNumber,
+          //Si hay challenge, navega a la página del juego
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => GamePage(
+                jerseyChallenge: challenge!,
+                challengeNumber: challengeNumber,
+              ),
             ),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(
-          // ignore: use_build_context_synchronously
-          context,
-        ).showSnackBar(SnackBar(content: Text("No hay desafío para hoy.")));
-      }
+          );
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text("Error: $error")),
+      );
     }
 
     return Container(

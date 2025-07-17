@@ -91,7 +91,7 @@ class _GamePageState extends State<GamePage> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 16),
-              Image.asset(widget.jerseyChallenge.imagePath, height: 150),
+              Image.asset(widget.jerseyChallenge.imageUrl, height: 150),
               SizedBox(height: 16),
               Text("Team: $jerseyTeam\nYear: $jerseyRealYear"),
             ],
@@ -188,8 +188,8 @@ class _GamePageState extends State<GamePage> {
 
           return Stack(
             children: [
-              Image.asset(
-                widget.jerseyChallenge.imagePath,
+              Image.network(
+                widget.jerseyChallenge.imageUrl,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: 400,

@@ -1,58 +1,38 @@
-import 'package:camisetle/application/pages/game/game_page.dart';
-import 'package:camisetle/data/jersey_loader.dart';
-import 'package:camisetle/data/models/jersey_challange.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:camisetle/data/providers/challenge_providers.dart';
+import 'package:camisetle/application/pages/game/game_page.dart';
 
-class AllChallengesPage extends StatefulWidget {
+class AllChallengesPage extends ConsumerWidget {
   const AllChallengesPage({super.key});
 
   @override
-  State<AllChallengesPage> createState() => _AllChallengesPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncChallenges = ref.watch(allChallengesProvider);
 
-class _AllChallengesPageState extends State<AllChallengesPage> {
-  late Future<List<JerseyChallenge>> _futureChallenges;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureChallenges = loadJerseyChallenges();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Previous Challenges"),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<JerseyChallenge>>(
-        future: _futureChallenges,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          }
-
-          final allChallenges = snapshot.data!;
-
-          final allChallangesRevered = allChallenges.reversed.toList();
+      body: asyncChallenges.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text("Error: $error")),
+        data: (allChallenges) {
+          final allChallengesReversed = allChallenges.reversed.toList();
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.builder(
-              itemCount: allChallangesRevered.length,
+              itemCount: allChallengesReversed.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
               itemBuilder: (context, index) {
-                final challenge = allChallangesRevered[index];
-                final challengeNumber = allChallangesRevered.length - index;
+                final challenge = allChallengesReversed[index];
+                final challengeNumber = allChallengesReversed.length - index;
 
                 return GestureDetector(
                   onTap: () {
