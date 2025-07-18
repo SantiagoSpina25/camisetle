@@ -1,3 +1,4 @@
+import 'package:camisetle/data/models/guess_atempt.dart';
 import 'package:camisetle/data/models/jersey_challange.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,9 @@ class _GamePageState extends State<GamePage> {
 
   List<String> filteredTeams = [];
 
-  List<String> attempts = [];
+  List<GuessAttempt> attempts = [];
+
+  bool isGameOver = false;
 
   List<bool> revealedCells = List.generate(9, (_) => false);
 
@@ -68,15 +71,15 @@ class _GamePageState extends State<GamePage> {
 
     if (guess.isEmpty || attempts.length >= 6) return;
 
-    setState(() {
-      attempts.add(guess);
-    });
-
     String jerseyTeam = widget.jerseyChallenge.teamName;
     int jerseyYear = widget.jerseyChallenge.year;
     String jerseyRealYear = "$jerseyYear-${jerseyYear + 1}";
 
     bool isCorrect = guess == jerseyTeam;
+
+    setState(() {
+      attempts.add(GuessAttempt(guess: guess, isCorrect: isCorrect));
+    });
 
     if (isCorrect) {
       showDialog(
@@ -104,6 +107,12 @@ class _GamePageState extends State<GamePage> {
           ],
         ),
       );
+
+      //Revela todas las celdas al acertar
+      setState(() {
+        revealedCells = List.generate(9, (_) => true);
+        isGameOver = true;
+      });
     } else {
       _revealRandomCell();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -229,11 +238,12 @@ class _GamePageState extends State<GamePage> {
                 border: OutlineInputBorder(),
                 labelText: 'Type the team here',
               ),
+              enabled: !isGameOver,
             ),
           ),
           const SizedBox(width: 8),
           ElevatedButton.icon(
-            onPressed: checkAnswer,
+            onPressed: isGameOver ? null : checkAnswer,
             icon: Icon(Icons.sports_soccer),
             label: Text("GUESS"),
             style: ElevatedButton.styleFrom(
@@ -249,21 +259,34 @@ class _GamePageState extends State<GamePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
-        children: List.generate(6, (index) {
-          String? attempt = index < attempts.length ? attempts[index] : null;
+        children: List.generate(4, (index) {
+          //genera una lista de 6 intentos
+          //TODO controlar cuando se acaban los intentos
+          GuessAttempt? attempt = index < attempts.length
+              ? attempts[index]
+              : null;
+
+          //El color de fondo del contenedor depende del intento si es correcto o no
+          Color bgColor;
+          if (attempt == null) {
+            bgColor = Colors.blueGrey[900]!;
+          } else if (attempt.isCorrect) {
+            bgColor = Colors.green;
+          } else {
+            bgColor = const Color.fromARGB(255, 199, 57, 57);
+          }
+
           return Container(
             margin: EdgeInsets.symmetric(vertical: 4),
             height: 40,
             decoration: BoxDecoration(
-              color: attempt != null
-                  ? const Color.fromARGB(255, 199, 57, 57)
-                  : Colors.blueGrey[900],
+              color: bgColor,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: Colors.white12),
             ),
             alignment: Alignment.center,
             child: Text(
-              attempt ?? '',
+              attempt?.guess ?? '',
               style: const TextStyle(color: Colors.white),
             ),
           );

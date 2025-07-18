@@ -30,7 +30,7 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await importJerseysToFirestore();
+  // await importJerseysToFirestore();
 
   runApp(const ProviderScope(child: MainApp()));
 }
