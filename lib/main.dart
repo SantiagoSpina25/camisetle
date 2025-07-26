@@ -43,7 +43,30 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: Text(" Camisetle ⚽")),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF1C1C1E),
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            'Camisetle ⚽',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+              color: Colors.white,
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              tooltip: 'Ajustes',
+              onPressed: () {
+                //TODO implmentar pagina de ajustes
+              },
+            ),
+          ],
+        ),
+
         body: HomePage(),
       ),
     );
